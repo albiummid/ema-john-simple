@@ -15,8 +15,11 @@ nav a{
     color: white;
     margin-right: 20px;
     padding: 5px;
+   
 }
 
 nav a:hover{
-    background-color: gray;
+    text-decoration: none;
+    color: aliceblue;
+    background-color:gray;
 }
