@@ -3,9 +3,10 @@ import "./Product.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-const Product = (props) => {
+const Product = ({product, handleAddProduct, showAddToCart}) => {
     // console.log(props.product.key);
-    const { name, img, price, seller, stock ,key} = props.product;
+    // const { product, handleAddProduct } = props;
+    const { name, img, price, seller, stock ,key} = product;
     return (
         <div className="product">
             <div>
@@ -19,7 +20,7 @@ const Product = (props) => {
                     <p><small> by :  {seller}  </small> </p>
                     <h5>$ {price}</h5>
                     <p> <small>only {stock} left in stock - order soon</small> </p>
-                    {props.showAddToCart && <button onClick={() => props.handleAddProduct(props.product)}> <FontAwesomeIcon icon={faShoppingCart} /> add to cart</button>}
+                    {showAddToCart && <button onClick={() => handleAddProduct(product)}> <FontAwesomeIcon icon={faShoppingCart} /> add to cart</button>}
                     {/* here we use condiotion. */}
 
 

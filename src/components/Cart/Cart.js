@@ -7,7 +7,7 @@ const Cart = (props) => {
     let total = 0;
     for (let i = 0; i < cart.length; i++) {
         const product = cart[i];
-        total = Number(total + product.price);
+        total = Number(total + product.price * product.quantity);
     }
 
     let shipping = 0;
@@ -37,7 +37,10 @@ const Cart = (props) => {
                 <p><small>Tax + Vat = {formatNumber(tax)}</small></p>
             <p> Total Price :{grandTotal} </p>
             
-<Link to="/review" > <button> Order Review </button> </Link>
+            {
+                props.children
+            }
+            {/* here i set a children of cart in shop.js ; thats why only in shop component button is displayed */}
 
         </div>
     );
