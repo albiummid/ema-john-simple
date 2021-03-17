@@ -6,6 +6,7 @@ import logo from "../../images/logo.png";
 import "./Header.css";
 const Header = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext)
+   console.log(loggedInUser);
     return (
         <div className="header">
             <a href="/shop"> <img src={logo} alt=""/></a>
