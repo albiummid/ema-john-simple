@@ -7,6 +7,7 @@ import { initializeLoginFramework, handleGoogleSignIn, handleSignOut, handleFbSi
 
 
 function Login() {
+  initializeLoginFramework();
   const [newUser, setNewUser] = useState(false);
   const [user, setUser] = useState({
     isSignedIn: false,
@@ -15,7 +16,8 @@ function Login() {
     password: '',
     photo: ''
   });
-
+  console.log(user);
+  
   initializeLoginFramework();
 
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -64,8 +66,10 @@ console.log(loggedInUser);
       isFieldValid = isPasswordValid && passwordHasNumber;
     }
     if(isFieldValid){
-      const newUserInfo = {...user};
+      const newUserInfo = { ...user };
+      console.log("before update userInfo",newUserInfo);
       newUserInfo[e.target.name] = e.target.value;
+      console.log("after update userInfo",newUserInfo);
       setUser(newUserInfo);
     }
   }
@@ -89,7 +93,8 @@ console.log(loggedInUser);
 
 
   return (
-    <div style={{textAlign: 'center',margin:"50px"}}>
+    <div style={{ textAlign: 'center', margin: "50px" }}>
+      
         {
           newUser && user.isSignedIn ? <button onClick={signOut}>Sign Out with Google</button> : <button onClick={googleSignIn}>Sign In with Google</button>
         }

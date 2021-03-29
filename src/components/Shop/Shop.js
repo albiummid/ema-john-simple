@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import fakeData from "../../fakeData";
 import "./Shop.css";
 import Product from "../Product/Product";
 import Cart from '../Cart/Cart';
 import { addToDatabaseCart, getDatabaseCart } from "../../utilities/databaseManager";
 import { Link } from 'react-router-dom';
 const Shop = () => {
-    const first10 = fakeData.slice(0, 10)
-    const [products] = useState(first10)
+    // const first10 = fakeData.slice(0, 10)
+    const [products,setProducts] = useState({})
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        
+        fetch("http://localhost:5000/products")
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data)
+            })
+    },[products])
+
+    useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const previousCart = productKeys.map(existingKey => {
-            const product = fakeData.find(pd => pd.key === existingKey);
-            product.quantity = savedCart[existingKey];
-            console.log(savedCart);
-            return product;
-        })
-
-        setCart(previousCart)
-    },[])
+            fetch('http://localhost:5000/productsByKeys', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                    
+                },
+                body: JSON.stringify(productKeys)
+            })
+                .then(res => res.json())
+            .then(data => setCart(data))
+        }, []);
 
     const handleAddProduct = (product) => {
         const toBeAddedKey = product.key;
@@ -50,7 +58,7 @@ const Shop = () => {
         <div className="twin-container">
             <div className="product-container">
 
-                {
+                { products.length &&
                     products.map(pd => <Product handleAddProduct={handleAddProduct} product={pd} key={pd.key}
                     showAddToCart={true}
                     ></Product>)
